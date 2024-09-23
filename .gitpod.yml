@@ -5,6 +5,7 @@ tasks:
       cp .env.example .env
       sed -i "s#APP_URL=http://localhost#APP_URL=$(gp url 8000)#g" .env
       sed -i "s#GITPOD_VITE_URL=#GITPOD_VITE_URL=$(gp url 5173)#g" .env
+      gp sync-done vite-url
       composer install
       php artisan key:generate
       php artisan storage:link
@@ -15,6 +16,7 @@ tasks:
   - name: Install Node dependencies and run Vite
     openMode: split-right
     command: |
+      gp sync-await vite-url
       npm install
       npm run dev
 
